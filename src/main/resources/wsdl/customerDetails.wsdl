@@ -1,0 +1,77 @@
+<wsdl:definitions
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:sch="http://www.pnc.com/customer/soap/ws/customer"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://www.pnc.com/customer/soap/ws/customer"
+	targetNamespace="http://www.pnc.com/customer/soap/ws/customer">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			elementFormDefault="qualified"
+			targetNamespace="http://www.pnc.com/customer/soap/ws/customer">
+			<xs:element name="CustomerDetailsRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="name" type="xs:string" />
+						<xs:element name="accountnumber" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="CustomerDetailsResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Customer" type="tns:Customer" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:complexType name="Customer">
+				<xs:sequence>
+					<xs:element name="name" type="xs:string" />
+					<xs:element name="accountnumber" type="xs:string" />
+					<xs:element name="city" type="xs:string" />
+					<xs:element name="address" type="xs:string" />
+					<xs:element name="phone" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="CustomerDetailsRequest">
+		<wsdl:part element="tns:CustomerDetailsRequest"
+			name="CustomerDetailsRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="CustomerDetailsResponse">
+		<wsdl:part element="tns:CustomerDetailsResponse"
+			name="CustomerDetailsResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="CustomerDetails">
+		<wsdl:operation name="CustomerDetails">
+			<wsdl:input message="tns:CustomerDetailsRequest"
+				name="CustomerDetailsRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:CustomerDetailsResponse"
+				name="CustomerDetailsResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="CustomerDetailsSoap11"
+		type="tns:CustomerDetails">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="CustomerDetails">
+			<soap:operation soapAction="" />
+			<wsdl:input name="CustomerDetailsRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="CustomerDetailsResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="CustomerDetailsService">
+		<wsdl:port binding="tns:CustomerDetailsSoap11"
+			name="CustomerDetailsSoap11">
+			<soap:address location="http://localhost:8080/ws" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
